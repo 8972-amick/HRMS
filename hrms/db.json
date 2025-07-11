@@ -1,0 +1,15 @@
+{
+  "employees": [
+    {
+      "id": "dbd8",
+      "name": "Amick Khadka",
+      "email": "khadkaamick@gmail.com",
+      "department": "engineering",
+      "designation": "senior",
+      "userType": "hr",
+      "salary": "50000",
+      "password": "12345",
+      "date": "7/11/2025"
+    }
+  ]
+}
