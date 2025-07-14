@@ -10,6 +10,17 @@
       "salary": "50000",
       "password": "12345",
       "date": "7/11/2025"
+    },
+    {
+      "id": "cf5b",
+      "name": "khadka",
+      "email": "amick@gmail.com",
+      "department": "engineering",
+      "designation": "senior",
+      "userType": "manager",
+      "salary": "50000",
+      "password": "11111",
+      "date": "7/14/2025"
     }
   ]
 }
