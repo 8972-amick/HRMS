@@ -21,6 +21,28 @@
       "salary": "50000",
       "password": "11111",
       "date": "7/14/2025"
+    },
+    {
+      "id": "60f1",
+      "name": "mabhish",
+      "email": "abcxyz@gmail.com",
+      "department": "engineering",
+      "designation": "midlevel",
+      "userType": "manager",
+      "salary": "50000",
+      "password": "12345",
+      "date": "7/15/2025"
+    },
+    {
+      "id": "0f08",
+      "name": "uuuu",
+      "email": "zzzz@gmail.com",
+      "department": "sales",
+      "designation": "senior",
+      "userType": "employee",
+      "salary": "20000",
+      "password": "12345",
+      "date": "7/15/2025"
     }
   ]
 }
