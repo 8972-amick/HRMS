@@ -1,8 +1,9 @@
 //entry file
-import express from "express";
+import express from "express";//framework for node
 import mongoose from "mongoose";
 import morgan from "morgan";
 import dotenv from "dotenv";
+import { createEmployee } from "./controller/employee.controller.js"; //importing controller
 dotenv.config();
 
 const app = express(); //instance create
@@ -22,6 +23,8 @@ app.use(morgan("dev"));
 app.get("/dharan", (req, res) => {
   res.status(200).json({ message: "Welcome to Dharan" });
 }); //takes request and parameter as arguments
+
+app.post("/employee/create", createEmployee); //create employee route
 //database connect
 mongoose
   .connect(process.env.MONGO_URL)

@@ -1,6 +1,6 @@
 //require mongoose to make models
 
-import mongoose, { Schema } from "mongoose";
+import mongoose, { model, Schema } from "mongoose";
 
 const employeeSchema = new Schema ({
     name: String,
