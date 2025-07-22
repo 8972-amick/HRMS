@@ -16,7 +16,7 @@ export async function createEmployee (req, res) {
             return;
         }
         //3.check if email already exists in database
-        const isEmailExists = await employeeModel.findOne(email);
+        const isEmailExists = await employeeModel.findOne({email}); //findOne is used to find a single document in the database
         if(isEmailExists){
            res.status(400).json({ message: "Email already exists" }); //if email exists then return error message
               return;

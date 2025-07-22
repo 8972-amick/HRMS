@@ -18,6 +18,7 @@ app.use((req, res, next) => {
 });
 //for logging information
 app.use(morgan("dev"));
+app.use(express.json()); //to parse json data from frontend
 
 //create route
 app.get("/dharan", (req, res) => {
@@ -25,6 +26,8 @@ app.get("/dharan", (req, res) => {
 }); //takes request and parameter as arguments
 
 app.post("/employee/create", createEmployee); //create employee route
+
+
 //database connect
 mongoose
   .connect(process.env.MONGO_URL)
