@@ -1,45 +1,66 @@
 import employeeModel from "../models/employee.model.js";
 
-export async function createEmployee (req, res) {
-    try {
-        //1. extract the data from frontend 
-        const {name,email,designation,department,userType,salary,password} = req.body; // post bata data send huda req ma aauxa
-        //2.validate the data either it is correct or not such as email,password name an so on
-        if (!name ||
-             !email ||
-             !designation ||
-             !department ||
-             !userType ||
-             !salary ||
-             !password) {
-            res.status(400).json({ message: "All fields are required" });// obect in curly braces as message
-            return;
-        }
-        //3.check if email already exists in database
-        const isEmailExists = await employeeModel.findOne({email}); //findOne is used to find a single document in the database
-        if(isEmailExists){
-           res.status(400).json({ message: "Email already exists" }); //if email exists then return error message
-              return;
-        }
-        //4.if not exists then create a new employee
-        const employeeData = await employeeModel.create ({
-            name,
-            email,
-            designation,
-            department,
-            userType,
-            salary,
-            password
-        })
-        //5.send successful message 
-        res.status(201).json({ message: "Employee created successfully", employeeData });
-        //201 is for created successfully
-
-
-    } catch (error) {
-        // if any error occurs ,send response of error
-        console.error("Error:", error);
-        res.status(500).json({message:"Internal server error"}); //500 is for internal server error
+export async function createEmployee(req, res) {
+  try {
+    //1. extract the data from frontend
+    const { name, email, designation, department, userType, salary, password } =
+      req.body; // post bata data send huda req ma aauxa
+    //2.validate the data either it is correct or not such as email,password name an so on
+    if (
+      !name ||
+      !email ||
+      !designation ||
+      !department ||
+      !userType ||
+      !salary ||
+      !password
+    ) {
+      res.status(400).json({ message: "All fields are required" }); // obect in curly braces as message
+      return;
     }
+    //3.check if email already exists in database
+    const isEmailExists = await employeeModel.findOne({ email }); //findOne is used to find a single document in the database
+    if (isEmailExists) {
+      res.status(400).json({ message: "Email already exists" }); //if email exists then return error message
+      return;
+    }
+    //4.if not exists then create a new employee
+    const employeeData = await employeeModel.create({
+      name,
+      email,
+      designation,
+      department,
+      userType,
+      salary,
+      password,
+    });
+    //5.send successful message
+    res
+      .status(201)
+      .json({ message: "Employee created successfully", employeeData });
+    //201 is for created successfully
+  } catch (error) {
+    // if any error occurs ,send response of error
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" }); //500 is for internal server error
+  }
+}
 
+// This function can be used to get all employees
+export async function getEmployees(req, res) {
+  try {
+    const allEmployees = await employeeModel.find(); //find all employees
+
+    if (allEmployees.length === 0) {
+      res.status(404).json({ message: "No employees records  found" });
+      return;
+    }
+    res.status(200).json({ message: " ✅ EMployee Data found", allEmployees });
+  } catch (error) {
+    console.error(
+      " ❌ Error while getting the data of respective employee:",
+      error
+    );
+    res.status(500).json({ message: "Internal server error" });
+  }
 }
