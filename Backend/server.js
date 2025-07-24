@@ -28,6 +28,7 @@ app.get("/dharan", (req, res) => {
 
 app.post("/employee/create", createEmployee); //create employee route
 app.get("/employee/getAllEmployees", getEmployees); //get all employees route
+app.get("/employee/getAllEmployees/:id", getEmployeeById); //get employee by id route
 
 
 //database connect
