@@ -64,3 +64,20 @@ export async function getEmployees(req, res) {
     res.status(500).json({ message: "Internal server error" });
   }
 }
+//function to get employee by id
+export async function getEmployeeById(req, res) {
+    try {
+        const id = req.params.id; // assuming the ID is passed as a URL parameter
+        const employee = await employeeModel.findById(id); //use employeeModel.findbyID to find employee by ID
+        if (!employee) { //if employee not found send 404 status code with message
+            
+            return res.status(404).json({ message: "Employee not found" });
+        }
+        res.status(200).json({ message: "Employee found", data: employee });  //if employee found, send 200 status code with employee data
+        
+    } catch (error) {
+        console.log("Error while fetching employee by ID:", error);
+        res.status(500).json({ message: "Internal server error" });
+        
+    }
+}
