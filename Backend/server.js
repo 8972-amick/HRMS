@@ -3,7 +3,7 @@ import express from "express";//framework for node
 import mongoose from "mongoose";
 import morgan from "morgan";
 import dotenv from "dotenv";
-import { createEmployee, getEmployees } from "./controller/employee.controller.js"; //importing controller
+import { createEmployee, getEmployees, getEmployeeById, updateEmployee, deleteEmployee } from "./controller/employee.controller.js"; //importing controller
 
 dotenv.config();
 
@@ -25,10 +25,12 @@ app.use(express.json()); //to parse json data from frontend
 app.get("/dharan", (req, res) => {
   res.status(200).json({ message: "Welcome to Dharan" });
 }); //takes request and parameter as arguments
-
+ 
 app.post("/employee/create", createEmployee); //create employee route
 app.get("/employee/getAllEmployees", getEmployees); //get all employees route
 app.get("/employee/getAllEmployees/:id", getEmployeeById); //get employee by id route
+app.put("/employee/update/:id", updateEmployee); //update employee route
+app.delete("/employee/delete/:id", deleteEmployee); //delete employee routes
 
 
 //database connect

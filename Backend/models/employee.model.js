@@ -4,7 +4,11 @@ import mongoose, { model, Schema } from "mongoose";
 
 const employeeSchema = new Schema ({
     name: String,
-    email: String,
+    email: 
+    { type: String,
+      unique: true,
+     }, //to make email unique
+    //json=java script object notation
     designation: String,
     department: String,
     userType: String,
