@@ -1,4 +1,5 @@
 import employeeModel from "../models/employee.model.js";
+import bcrypt from "bcrypt";
 
 export async function createEmployee(req, res) {
   try {
@@ -24,6 +25,9 @@ export async function createEmployee(req, res) {
       res.status(400).json({ message: "Email already exists" }); //if email exists then return error message
       return;
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10); //hashing the password with bcrypt
+    //10 is the salt rounds, it determines how many times the password will be hashed
     //4.if not exists then create a new employee
     const employeeData = await employeeModel.create({
       name,
@@ -32,13 +36,12 @@ export async function createEmployee(req, res) {
       department,
       userType,
       salary,
-      password,
+      password: hashedPassword, //store hashed password in database
     });
     //5.send successful message
     res
       .status(201)
-      .json({ message: "Employee created successfully", employeeData });
-    //201 is for created successfully
+      .json({ message: "Employee created successfully", data:employeeData });   //201 is for created successfully
   } catch (error) {
     // if any error occurs ,send response of error
     console.error("Error:", error);
@@ -84,6 +87,7 @@ export async function getEmployeeById(req, res) {
 //function to update employee data
 export async function updateEmployee(req, res) {
   try {
+    let hashedPassword;
     //1.kun data update garna parcha?
     const id = req.params.id;
 
@@ -91,10 +95,15 @@ export async function updateEmployee(req, res) {
     const { name, email, designation, department, userType, salary, password } =
       req.body;
 
+      if(password){
+        hashedPassword =await bcrypt.hash(password, 10); //hashing the password if it is provided
+      }
+      
+
     //3. aba update garne
     const updatedEmployee = await employeeModel.findByIdAndUpdate(
       id,
-      { name, email, designation, department, userType, salary, password },
+      { name, email, designation, department, userType, salary, password:hashedPassword },
       { new: true }
     ); //new:true to return the updated document
     //4.response send garne
