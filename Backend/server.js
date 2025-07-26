@@ -3,6 +3,7 @@ import express from "express";//framework for node
 import mongoose from "mongoose";
 import morgan from "morgan";
 import dotenv from "dotenv";
+import cors from "cors"; //to allow cross-origin requests
 import { createEmployee, getEmployees, getEmployeeById, updateEmployee, deleteEmployee } from "./controller/employee.controller.js"; //importing controller
 
 dotenv.config();
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
   next();
   // res.status(400).send("Smuggler!!")
 });
+app.use(cors()); //to allow cross-origin requests
 //for logging information
 app.use(morgan("dev"));
 app.use(express.json()); //to parse json data from frontend
