@@ -13,7 +13,7 @@ export default function Employee() {
   const fetchEmployees = async () => {
   const token = localStorage.getItem("token");
     try {
-      const res = await axios.get("http://localhost:5000/employees",{// data tanne kaam garxa get le 
+      const res = await axios.get("http://localhost:9000/employee",{// data tanne kaam garxa get le 
       headers:{
         Authorization : `Bearer ${token}`,
       },
@@ -35,7 +35,7 @@ catch (err) {
     if (!confirmDelete) return;
     const token = localStorage.getItem("token");
     try {
-       await axios.delete(`http://localhost:5000/employees/${id}`, {
+       await axios.delete(`http://localhost:9000/employee/${id}`, {
         headers: {
           Authorization:` Bearer ${token}`,
         },
