@@ -5,6 +5,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import cors from "cors"; //to allow cross-origin requests
 import { createEmployee, getEmployees, getEmployeeById, updateEmployee, deleteEmployee } from "./controller/employee.controller.js"; //importing controller
+import { loginEmployee } from "./controller/auth,controller.js";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.get("/employee", getEmployees); //get all employees route
 app.get("/employee/:id", getEmployeeById); //get employee by id route here id is the parameter
 app.put("/employee/:id", updateEmployee); //update employee route
 app.delete("/employee/:id", deleteEmployee); //delete employee routes
+app.post("/login", loginEmployee); //login employee route
 
 
 //database connect
