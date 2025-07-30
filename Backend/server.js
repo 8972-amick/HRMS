@@ -1,11 +1,18 @@
 //entry file
-import express from "express";//framework for node
+import express from "express"; //framework for node
 import mongoose from "mongoose";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import cors from "cors"; //to allow cross-origin requests
-import { createEmployee, getEmployees, getEmployeeById, updateEmployee, deleteEmployee } from "./controller/employee.controller.js"; //importing controller
-import { loginEmployee } from "./controller/auth,controller.js";
+import {
+  createEmployee,
+  getEmployees,
+  getEmployeeById,
+  updateEmployee,
+  deleteEmployee,
+} from "./controller/employee.controller.js"; //importing controller
+import { loginEmployee } from "./controller/auth.controller.js";
+import { authorizeToken } from "./middleware/auth.middleware.js";
 
 dotenv.config();
 
@@ -28,14 +35,13 @@ app.use(express.json()); //to parse json data from frontend
 app.get("/dharan", (req, res) => {
   res.status(200).json({ message: "Welcome to Dharan" });
 }); //takes request and parameter as arguments
- 
-app.post("/employee", createEmployee); //create employee route
-app.get("/employee", getEmployees); //get all employees route
+
+app.post("/employee", authorizeToken, createEmployee); //create employee route
+app.get("/employee", authorizeToken, getEmployees); //get all employees route
 app.get("/employee/:id", getEmployeeById); //get employee by id route here id is the parameter
 app.put("/employee/:id", updateEmployee); //update employee route
-app.delete("/employee/:id", deleteEmployee); //delete employee routes
+app.delete("/employee/:id", authorizeToken, deleteEmployee); //delete employee routes
 app.post("/login", loginEmployee); //login employee route
-
 
 //database connect
 mongoose
@@ -44,7 +50,7 @@ mongoose
     console.log("✅ Database connected successfully");
 
     app.listen(PORT, () => {
-      console.log("server is running at port:", PORT);
+      console.log(" 🚀 server is running at port:", PORT);
     }); //takes port and function as argument
   })
   .catch((err) => {
