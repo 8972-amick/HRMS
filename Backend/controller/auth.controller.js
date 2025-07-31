@@ -21,7 +21,7 @@ export async function loginEmployee(req,res){
         }
 
         const token = jwt.sign(
-            { id: employee._id, email: employee.email },"my_secret_key",
+            { id: employee._id, email: employee.email }, process.env.JWT_SECRET,
             { expiresIn: '1d' });
 
         res.status(200).json({
