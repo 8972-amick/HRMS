@@ -18,13 +18,13 @@ export function authorizeToken(req, res, next) {
             req.user = decoded; //attach user info to request object for further use
           
           //5.if unverified ,send error response
-          const {userType} = decoded;
-            // if((!userType == "admin")|| (!userType == "manager")){
-            //     return res.status(400).json({ message: "access denied" });
-            // }or
-            if (userType.toLower()== "employee") {
-                return res.status(403).json({ message: "Access denied for employees" });
-            }
+          // const {userType} = decoded;
+          //   // if((!userType == "admin")|| (!userType == "manager")){
+          //   //     return res.status(400).json({ message: "access denied" });
+          //   // }or
+          //   if (userType.toLower()== "employee") {
+          //       return res.status(400).json({ message: "Access denied for employees" });
+          //   }
 
             next(); //if verified, call next middleware or route handler
           //6.if verified, check if role is admin or not
@@ -42,4 +42,5 @@ export function checkRole(req,res,next) {
     if (userType.toLowerCase() == "employee") {
         return res.status(400).json({ message: "Access denied" });
     }
+    next(); //if role is valid, proceed to the next middleware or route handler
 }

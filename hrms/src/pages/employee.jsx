@@ -18,7 +18,7 @@ export default function Employee() {
         Authorization : `Bearer ${token}`,
       },
     })
-    setEmployees(res.data);
+    setEmployees(res.data.data);
   }
   
 
@@ -30,17 +30,17 @@ catch (err) {
     fetchEmployees();
   }, []);// dependency array which is empty[]
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (_id) => {
     const confirmDelete = window.confirm("Do you want to delete the employee?");
     if (!confirmDelete) return;
     const token = localStorage.getItem("token");
     try {
-       await axios.delete(`http://localhost:9000/employee/${id}`, {
+       await axios.delete(`http://localhost:9000/employee/${_id}`, {
         headers: {
           Authorization:` Bearer ${token}`,
         },
       });
-      setEmployees((prev) => prev.filter((emp) => emp.id !=id));
+      setEmployees((prev) => prev.filter((emp) => emp._id !=id));
       alert("Employee deleted successfully!");
     } catch (error) {
       console.error("Error deleting employee:" , error);
