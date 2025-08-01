@@ -12,7 +12,7 @@ import {
   deleteEmployee,
 } from "./controller/employee.controller.js"; //importing controller
 import { loginEmployee } from "./controller/auth.controller.js";
-import { authorizeToken } from "./middleware/auth.middleware.js";
+import { authorizeToken, checkRole } from "./middleware/auth.middleware.js";
 
 dotenv.config();
 
@@ -36,12 +36,17 @@ app.get("/dharan", (req, res) => {
   res.status(200).json({ message: "Welcome to Dharan" });
 }); //takes request and parameter as arguments
 
-app.post("/employee", authorizeToken, createEmployee); //create employee route
-app.get("/employee", authorizeToken, getEmployees); //get all employees route
+app.post("/employee", authorizeToken,checkRole, createEmployee); //create employee route
+app.get("/employee", authorizeToken,checkRole, getEmployees); //get all employees route
 app.get("/employee/:id", getEmployeeById); //get employee by id route here id is the parameter
 app.put("/employee/:id", updateEmployee); //update employee route
 app.delete("/employee/:id", authorizeToken, deleteEmployee); //delete employee routes
 app.post("/login", loginEmployee); //login employee route
+
+app.get("/", authorizeToken,() => {
+  res.status(200).json({ message: "Token verified" });
+
+});
 
 //database connect
 mongoose

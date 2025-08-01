@@ -15,6 +15,7 @@ export function authorizeToken(req, res, next) {
       try {
           //4.verify token
             const decoded = Jwt.verify(token, process.env.JWT_SECRET);
+            req.user = decoded; //attach user info to request object for further use
           
           //5.if unverified ,send error response
           const {userType} = decoded;
@@ -34,4 +35,11 @@ export function authorizeToken(req, res, next) {
         
       }
        
+}
+export function checkRole(req,res,next) {
+    const user = req.user;
+    const { userType } = user;
+    if (userType.toLowerCase() == "employee") {
+        return res.status(400).json({ message: "Access denied" });
+    }
 }
